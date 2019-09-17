@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Java语法归纳]]></title>
+    <title><![CDATA[jQuery提取页面表格数据导出excel]]></title>
+    <url>%2F2019%2F09%2F16%2FJava-jQuery%E5%AF%BC%E5%87%BA%E9%A1%B5%E9%9D%A2%E8%A1%A8%E6%A0%BC%E5%88%B0excel%2F</url>
+    <content type="text"><![CDATA[下面为获取html里面table数据的js方法。首先复制一份table，然后恢复合并的单元格，再循环元素拿数据，最后删除复制的table。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546function getTableData(id) &#123; var tables = []; $(id).each(function()&#123; var tableClone = $(this).clone(); var table = &#123; thead: [], tbody: [] &#125;; tableClone.find(&quot;thead tr th&quot;).each(function()&#123; table.thead.push($(this).text()); &#125;); tableClone.find(&quot;tbody tr&quot;).each(function(trindex,tritem)&#123; $(tritem).find(&quot;td&quot;).each(function(tdindex,tditem)&#123; var Rcount=$(tditem).attr(&quot;rowspan&quot;); var Ccount=$(tditem).attr(&quot;colspan&quot;); var newtd=&quot;&lt;td class=&apos;Ctd&apos;&gt;&quot;+$(tditem).text()+&quot;&lt;/td&gt;&quot;; if(Rcount&gt;1)&#123; var parent=$(tditem).parent(&quot;tr&quot;)[0]; while(Rcount &gt;1)&#123; $(parent).next().find(&quot;td&quot;).eq(tdindex).before(newtd); parent=$(parent).next(); Rcount--; &#125; $(tditem).removeAttr(&quot;rowspan&quot;); &#125; if(Ccount&gt;1)&#123; while(Ccount&gt;1)&#123; $(tditem).after(newtd); Ccount--; &#125; $(tditem).removeAttr(&quot;colspan&quot;); &#125; &#125;); &#125;); tableClone.find(&quot;tbody tr&quot;).each(function()&#123; var datas = []; $(this).find(&quot;td&quot;).each(function()&#123; datas.push($(this).text()); &#125;); table.tbody.push(datas); &#125;); tableClone.remove(); tables.push(table); &#125;); return tables;&#125; 下面的js方法是通过在页面添加form来实现post类型的页面跳转。 1234567891011121314151617181920212223242526272829303132333435363738function standardPost(url, args) &#123; var form = $(&apos;&lt;form method=&quot;post&quot;&gt;&lt;/form&gt;&apos;); form.attr(&#123;&quot;action&quot;: url&#125;); for (arg in args) &#123; if ($.isPlainObject(args[arg])) &#123; var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;); input.attr(&#123;&quot;name&quot;: arg&#125;); input.val(JSON.stringify(args[arg])); form.append(input); &#125; else if($.isArray(args[arg])) &#123; for (var i = 0; i &lt; args[arg].length; i++) &#123; var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;); input.attr(&#123;&quot;name&quot;: arg&#125;); if ($.isPlainObject(args[arg][i])) &#123; console.log(JSON.stringify(args[arg][i])); input.val(JSON.stringify(args[arg][i])); &#125; else &#123; input.val(args[arg][i]); &#125; form.append(input); &#125; if (args[arg].length == 1) &#123; var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;); input.attr(&#123;&quot;name&quot;: arg&#125;); input.val(&quot;&quot;); form.append(input); &#125; &#125; else &#123; var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;); input.attr(&#123;&quot;name&quot;: arg&#125;); input.val(args[arg]); form.append(input); &#125; &#125; $(document.body).append(form); form.submit(); form.remove();&#125; 使用实例： 12345678910exportExcel: function() &#123; var tables = getTableData(&quot;.table&quot;); var params = &#123; excelName: getMessage(&apos;messages.WeeklyReportMoisture&apos;), tables: tables, rows: [0], cols: [] &#125; standardPost(qyb_config.rootPath+&quot;/admin/export_excel.html&quot;,params);&#125; 方法中的rows、cols是用来对导出excel中有第几列或第几行需要合并单元格。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Java语法备忘录]]></title>
     <url>%2F2019%2F08%2F29%2FJava%E8%AF%AD%E6%B3%95%E5%BD%92%E7%BA%B3%2F</url>
     <content type="text"><![CDATA[集合之间的转换数组转List123String[] array = new String[]&#123;&quot;A&quot;, &quot;B&quot;, &quot;C&quot;&#125;;List&lt;String&gt; resultList = new ArrayList&lt;&gt;(array.length);Collections.addAll(resultList,array); 数组转Set1234String[] staffs = new String[]&#123;&quot;A&quot;, &quot;B&quot;, &quot;C&quot;&#125;;Set&lt;String&gt; staffsSet = new HashSet&lt;&gt;(Arrays.asList(staffs));staffsSet.add(&quot;D&quot;); // okstaffsSet.remove(&quot;Tom&quot;); // ok List转数组123List&lt;String&gt; staffsList = new ArrayList&lt;String&gt;();String[] strings = new String[staffsList.size()];list.toArray(strings); List转Set12List staffsList = new ArrayList();Set result = new HashSet(staffsList); Set转数组12Set&lt;String&gt; staffsSet = new HashSet&lt;&gt;();Object[] result = staffsSet.toArray(); Set转List12Set&lt;String&gt; staffsSet = new HashSet&lt;&gt;();List&lt;String&gt; result = new ArrayList&lt;&gt;(staffsSet); Map转List1234// 将Map Key 转化为List List&lt;String&gt; mapKeyList = new ArrayList&lt;String&gt;(map.keySet()); // 将Map Key 转化为List List&lt;String&gt; mapValuesList = new ArrayList&lt;String&gt;(map.values()); Map转Set1234// 将Map 的键转化为Set Set&lt;String&gt; mapKeySet = map.keySet(); // 将Map 的值转化为Set Set&lt;String&gt; mapValuesSet = new HashSet&lt;String&gt;(map.values());]]></content>
       <categories>
@@ -23,17 +28,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[markdown 语法]]></title>
-    <url>%2F2019%2F08%2F20%2Fmarkdown-%E8%AF%AD%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[标题代码： 123456# 这是一级标题## 这是二级标题### 这是三级标题#### 这是四级标题##### 这是五级标题###### 这是六级标题 效果： 这是一级标题这是二级标题这是三级标题这是四级标题这是五级标题这是六级标题字体效果代码： 1234**这是加粗的文字***这是倾斜的文字*`***这是斜体加粗的文字***~~这是加删除线的文字~~ 效果： 这是加粗的文字 这是倾斜的文字 这是斜体加粗的文字 这是加删除线的文字 引用代码： 12&gt;这是引用的内容&gt;&gt;这是引用的内容 效果： 这是引用的内容 这是引用的内容 分割线代码： 1234-------******** 效果： 图片语法： 1234![图片alt](图片地址 &quot;图片title&quot;)图片alt就是显示在图片下面的文字，相当于对图片内容的解释。图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加 超链接语法： 12[超链接名](超链接地址 &quot;超链接title&quot;)title可加可不加 示例： 12[简书](http://jianshu.com)[百度](http://baidu.com) 效果：简书 百度 列表无序列表语法： 1234无序列表用 - + * 任何一种都可以- 列表内容+ 列表内容* 列表内容 注意：- + * 跟内容之间都要有一个空格 效果如下： 列表内容 列表内容 列表内容 有序列表语法： 1234数字加点1.列表内容2.列表内容3.列表内容 注意：序号跟内容之间要有空格 效果：1.列表内容2.列表内容3.列表内容 列表嵌套上一级和下一级之间敲三个空格或者一个Tap即可代码： 1234+ 一级无序列表内容 + 二级无序列表内容 + 二级无序列表内容 + 二级无序列表内容 效果： 一级无序列表内容 二级无序列表内容 三级无序列表内容 四级无序列表内容 表格语法： 1234567891011表头|表头|表头---|:--:|---:内容|内容|内容内容|内容|内容第二行分割表头和内容。- 有一个就行，为了对齐，多加了几个文字默认居左-两边加：表示文字居中-右边加：表示文字居右注：原生的语法两边都要用 | 包起来。此处省略 效果：| 项目 | 价格 | 数量 || ——– | —–: | :—-: || 计算机 | $1600 | 5 || 手机 | $12 | 12 || 管线 | $1 | 234 | 九、代码语法：单行代码：代码之间分别用一个反引号包起来 1`代码内容` 代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行 12345(```) 代码... 代码... 代码...(```) 注：为了防止转译，前后三个反引号处加了小括号，实际是没有的。这里只是用来演示，实际中去掉两边小括号即可。 反斜杠Markdown 支持在以下这些符号前面加上反斜杠来帮助插入普通的符号： 123456789101112\ 反斜线` 反引号* 星号_ 底线&#123;&#125; 花括号[] 方括号() 括弧# 井字号+ 加号- 减号. 英文句点! 惊叹号]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Hexo常用指令]]></title>
     <url>%2F2019%2F08%2F20%2Fhello-world%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 新建文章1$ hexo new "My New Post" 新建一篇题为“My New Post”的文章，此时会在E/Hexo/source/_posts/目录下生成一份My-New-Post.md 的文件，使用Notepad++、小书匠、MarkdownPad2等编辑工具打开即能书写； 提示信息：INFO Created: E:\Hexo\source_posts\My-New-Post.md 如果标题包含空格，需要使用双引号括起来 新建页面1$ hexo new page pageName 新建一个题为“pageName”的页面，此时会在E:\Hexo\source\目录下生成一个名为pageName的文件夹，其中包含一份 index 的md文件； 提示信息：INFO Created: E:\Hexo\source\pageName\index.md 同样地，如果语句中包含空格，需要使用双引号括起来 生成静态页面1$ hexo generate 启动该条指令后会将当前网页的内容生成静态页面到public目录下 开启本地服务器端口1$ hexo server 开启预览访问的端口，默认端口为4000 关闭server使用 ctrl + c 在使用hexo server 可能会遇到端口被占用的情况，不妨使用以下指令来更改端口 1$ hexo server -p 4001 部署到Github1$ hexo deploy 将 E/Hexo/目录下的 .deploy_git 文件夹部署到Github 部署前需要预先 hexo generate 生成静态文件 清除文件1$ hexo clean 清除E/Hexo目录下的缓存文件（db.json）和已经生成的静态文件（public）文件 网页正常情况下可以忽略此条命令 查看Hexo版本1$ hexo version 简写形式12345hexo n #等价于 hexo newhexo g #等价于 hexo generatehexo s #等价于 hexo serverhexo d #等价于 hexo deployhexo v #等价于 hexo version 复合指令12hexo g -d hexo s -d hexo g -d # 等价于 hexo generate –deploy ：生成静态文件并部署 hexo s -d # 等价于 hexo deploy –generate ：开启预览并部署到Github]]></content>
@@ -43,6 +37,17 @@
       <tags>
         <tag>hexo</tag>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[markdown 语法]]></title>
+    <url>%2F2019%2F08%2F20%2Fmarkdown-%E8%AF%AD%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[标题代码： 123456# 这是一级标题## 这是二级标题### 这是三级标题#### 这是四级标题##### 这是五级标题###### 这是六级标题 效果： 这是一级标题这是二级标题这是三级标题这是四级标题这是五级标题这是六级标题字体效果代码： 1234**这是加粗的文字***这是倾斜的文字*`***这是斜体加粗的文字***~~这是加删除线的文字~~ 效果： 这是加粗的文字 这是倾斜的文字 这是斜体加粗的文字 这是加删除线的文字 引用代码： 12&gt;这是引用的内容&gt;&gt;这是引用的内容 效果： 这是引用的内容 这是引用的内容 分割线代码： 1234-------******** 效果： 图片语法： 1234![图片alt](图片地址 &quot;图片title&quot;)图片alt就是显示在图片下面的文字，相当于对图片内容的解释。图片title是图片的标题，当鼠标移到图片上时显示的内容。title可加可不加 超链接语法： 12[超链接名](超链接地址 &quot;超链接title&quot;)title可加可不加 示例： 12[简书](http://jianshu.com)[百度](http://baidu.com) 效果：简书 百度 列表无序列表语法： 1234无序列表用 - + * 任何一种都可以- 列表内容+ 列表内容* 列表内容 注意：- + * 跟内容之间都要有一个空格 效果如下： 列表内容 列表内容 列表内容 有序列表语法： 1234数字加点1.列表内容2.列表内容3.列表内容 注意：序号跟内容之间要有空格 效果：1.列表内容2.列表内容3.列表内容 列表嵌套上一级和下一级之间敲三个空格或者一个Tap即可代码： 1234+ 一级无序列表内容 + 二级无序列表内容 + 二级无序列表内容 + 二级无序列表内容 效果： 一级无序列表内容 二级无序列表内容 三级无序列表内容 四级无序列表内容 表格语法： 1234567891011表头|表头|表头---|:--:|---:内容|内容|内容内容|内容|内容第二行分割表头和内容。- 有一个就行，为了对齐，多加了几个文字默认居左-两边加：表示文字居中-右边加：表示文字居右注：原生的语法两边都要用 | 包起来。此处省略 效果：| 项目 | 价格 | 数量 || ——– | —–: | :—-: || 计算机 | $1600 | 5 || 手机 | $12 | 12 || 管线 | $1 | 234 | 九、代码语法：单行代码：代码之间分别用一个反引号包起来 1`代码内容` 代码块：代码之间分别用三个反引号包起来，且两边的反引号单独占一行 12345(```) 代码... 代码... 代码...(```) 注：为了防止转译，前后三个反引号处加了小括号，实际是没有的。这里只是用来演示，实际中去掉两边小括号即可。 反斜杠Markdown 支持在以下这些符号前面加上反斜杠来帮助插入普通的符号： 123456789101112\ 反斜线` 反引号* 星号_ 底线&#123;&#125; 花括号[] 方括号() 括弧# 井字号+ 加号- 减号. 英文句点! 惊叹号]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
       </tags>
   </entry>
 </search>
