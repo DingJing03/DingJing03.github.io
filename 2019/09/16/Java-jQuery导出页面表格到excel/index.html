@@ -1,1036 +1,232 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html lang="en">
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT">
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="下面为获取html里面table数据的js方法。首先复制一份table，然后恢复合并的单元格，再循环元素拿数据，最后删除复制的table。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546function getTableData(id) &amp;#123;	var tables = [">
-<meta name="keywords" content="博客">
-<meta property="og:type" content="article">
-<meta property="og:title" content="jQuery提取页面表格数据导出excel">
-<meta property="og:url" content="http://yoursite.com/2019/09/16/Java-jQuery导出页面表格到excel/index.html">
-<meta property="og:site_name" content="丁京">
-<meta property="og:description" content="下面为获取html里面table数据的js方法。首先复制一份table，然后恢复合并的单元格，再循环元素拿数据，最后删除复制的table。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546function getTableData(id) &amp;#123;	var tables = [">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-17T02:48:19.410Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jQuery提取页面表格数据导出excel">
-<meta name="twitter:description" content="下面为获取html里面table数据的js方法。首先复制一份table，然后恢复合并的单元格，再循环元素拿数据，最后删除复制的table。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546function getTableData(id) &amp;#123;	var tables = [">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2019/09/16/Java-jQuery导出页面表格到excel/">
-
-
-
-
-
-  <title>jQuery提取页面表格数据导出excel | 丁京</title>
-  
-
-
-
-
-
-
-
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="丁京的博客">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        jQuery提取页面表格数据导出excel - 丁京的博客 | DingJing&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">丁京</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">DingJing</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
+<div class="site-nav-toggle" id="site-nav-toggle">
     <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
     </button>
-  </div>
 </div>
 
-<nav class="site-nav">
-  
+<div class="index-about">
+    <i>  </i>
+</div>
 
-  
-    <ul id="menu" class="menu">
-      
+<div class="index-container">
+    
+    <div class="index-left">
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            归档
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar ">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>丁京</i>
+        </div>
     </div>
-  </div>
-  <div id="local-search-result"></div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    
+</div>
+    
 </div>
 
 
-
-    </div>
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/16/Java-jQuery导出页面表格到excel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="丁京">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="丁京">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">jQuery提取页面表格数据导出excel</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-16T10:14:51+08:00">
-                2019-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
 
         </div>
-      </header>
-    
+    </div>
+</div>
 
+        <div class="index-about-mobile">
+            <i>  </i>
+        </div>
+    </div>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    <div class="index-middle">
+        <!-- Main Content -->
+        
 
-      
-      
 
-      
+<div class="post-container">
+    <div class="post-title">
+        jQuery提取页面表格数据导出excel
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-09-16 10:14:51</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#javascript" title="javascript">javascript</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
         <p>下面为获取html里面table数据的js方法。首先复制一份table，然后恢复合并的单元格，再循环元素拿数据，最后删除复制的table。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">function getTableData(id) &#123;</span><br><span class="line">	var tables = [];</span><br><span class="line">	$(id).each(function()&#123;</span><br><span class="line">		var tableClone = $(this).clone();</span><br><span class="line">		var table = &#123;</span><br><span class="line">			thead: [],</span><br><span class="line">			tbody: []</span><br><span class="line">		&#125;;</span><br><span class="line">		tableClone.find(&quot;thead tr th&quot;).each(function()&#123;</span><br><span class="line">			table.thead.push($(this).text());</span><br><span class="line">		&#125;);</span><br><span class="line">		tableClone.find(&quot;tbody tr&quot;).each(function(trindex,tritem)&#123;</span><br><span class="line">			   $(tritem).find(&quot;td&quot;).each(function(tdindex,tditem)&#123;</span><br><span class="line">					var Rcount=$(tditem).attr(&quot;rowspan&quot;);</span><br><span class="line">					var Ccount=$(tditem).attr(&quot;colspan&quot;);</span><br><span class="line">					var newtd=&quot;&lt;td class=&apos;Ctd&apos;&gt;&quot;+$(tditem).text()+&quot;&lt;/td&gt;&quot;;</span><br><span class="line">					if(Rcount&gt;1)&#123;</span><br><span class="line">						var parent=$(tditem).parent(&quot;tr&quot;)[0];</span><br><span class="line">						while(Rcount &gt;1)&#123;</span><br><span class="line">							$(parent).next().find(&quot;td&quot;).eq(tdindex).before(newtd);</span><br><span class="line">							parent=$(parent).next();</span><br><span class="line">							Rcount--;</span><br><span class="line">						&#125;</span><br><span class="line">						$(tditem).removeAttr(&quot;rowspan&quot;);</span><br><span class="line">					&#125;</span><br><span class="line">					if(Ccount&gt;1)&#123;</span><br><span class="line">						while(Ccount&gt;1)&#123;</span><br><span class="line">							$(tditem).after(newtd);</span><br><span class="line">							Ccount--;</span><br><span class="line">						&#125;</span><br><span class="line">						$(tditem).removeAttr(&quot;colspan&quot;);</span><br><span class="line">					&#125;</span><br><span class="line">			  &#125;);</span><br><span class="line">		&#125;);</span><br><span class="line">		tableClone.find(&quot;tbody tr&quot;).each(function()&#123;</span><br><span class="line">			var datas = [];</span><br><span class="line">			$(this).find(&quot;td&quot;).each(function()&#123;</span><br><span class="line">				datas.push($(this).text());</span><br><span class="line">			&#125;);</span><br><span class="line">			table.tbody.push(datas);</span><br><span class="line">		&#125;);</span><br><span class="line">		tableClone.remove();</span><br><span class="line">		tables.push(table);</span><br><span class="line">	&#125;);</span><br><span class="line">	return tables;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTableData</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> tables = [];</span><br><span class="line">	$(id).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> tableClone = $(<span class="keyword">this</span>).clone();</span><br><span class="line">		<span class="keyword">var</span> table = &#123;</span><br><span class="line">			thead: [],</span><br><span class="line">			tbody: []</span><br><span class="line">		&#125;;</span><br><span class="line">		tableClone.find(<span class="string">"thead tr th"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			table.thead.push($(<span class="keyword">this</span>).text());</span><br><span class="line">		&#125;);</span><br><span class="line">		tableClone.find(<span class="string">"tbody tr"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params">trindex,tritem</span>)</span>&#123;</span><br><span class="line">			   $(tritem).find(<span class="string">"td"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params">tdindex,tditem</span>)</span>&#123;</span><br><span class="line">					<span class="keyword">var</span> Rcount=$(tditem).attr(<span class="string">"rowspan"</span>);</span><br><span class="line">					<span class="keyword">var</span> Ccount=$(tditem).attr(<span class="string">"colspan"</span>);</span><br><span class="line">					<span class="keyword">var</span> newtd=<span class="string">"&lt;td class='Ctd'&gt;"</span>+$(tditem).text()+<span class="string">"&lt;/td&gt;"</span>;</span><br><span class="line">					<span class="keyword">if</span>(Rcount&gt;<span class="number">1</span>)&#123;</span><br><span class="line">						<span class="keyword">var</span> parent=$(tditem).parent(<span class="string">"tr"</span>)[<span class="number">0</span>];</span><br><span class="line">						<span class="keyword">while</span>(Rcount &gt;<span class="number">1</span>)&#123;</span><br><span class="line">							$(parent).next().find(<span class="string">"td"</span>).eq(tdindex).before(newtd);</span><br><span class="line">							parent=$(parent).next();</span><br><span class="line">							Rcount--;</span><br><span class="line">						&#125;</span><br><span class="line">						$(tditem).removeAttr(<span class="string">"rowspan"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">if</span>(Ccount&gt;<span class="number">1</span>)&#123;</span><br><span class="line">						<span class="keyword">while</span>(Ccount&gt;<span class="number">1</span>)&#123;</span><br><span class="line">							$(tditem).after(newtd);</span><br><span class="line">							Ccount--;</span><br><span class="line">						&#125;</span><br><span class="line">						$(tditem).removeAttr(<span class="string">"colspan"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">			  &#125;);</span><br><span class="line">		&#125;);</span><br><span class="line">		tableClone.find(<span class="string">"tbody tr"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="keyword">var</span> datas = [];</span><br><span class="line">			$(<span class="keyword">this</span>).find(<span class="string">"td"</span>).each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">				datas.push($(<span class="keyword">this</span>).text());</span><br><span class="line">			&#125;);</span><br><span class="line">			table.tbody.push(datas);</span><br><span class="line">		&#125;);</span><br><span class="line">		tableClone.remove();</span><br><span class="line">		tables.push(table);</span><br><span class="line">	&#125;);</span><br><span class="line">	<span class="keyword">return</span> tables;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>下面的js方法是通过在页面添加form来实现post类型的页面跳转。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">function standardPost(url, args) &#123;</span><br><span class="line">	var form = $(&apos;&lt;form method=&quot;post&quot;&gt;&lt;/form&gt;&apos;);</span><br><span class="line">	form.attr(&#123;&quot;action&quot;: url&#125;);</span><br><span class="line">	for (arg in args) &#123;</span><br><span class="line">		if ($.isPlainObject(args[arg])) &#123;</span><br><span class="line">			var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;);</span><br><span class="line">			input.attr(&#123;&quot;name&quot;: arg&#125;);</span><br><span class="line">			input.val(JSON.stringify(args[arg]));</span><br><span class="line">			form.append(input);</span><br><span class="line">		&#125; else if($.isArray(args[arg])) &#123;</span><br><span class="line">			for (var i = 0; i &lt; args[arg].length; i++) &#123;</span><br><span class="line">				var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;);</span><br><span class="line">				input.attr(&#123;&quot;name&quot;: arg&#125;);</span><br><span class="line">				if ($.isPlainObject(args[arg][i])) &#123;</span><br><span class="line">					console.log(JSON.stringify(args[arg][i]));</span><br><span class="line">					input.val(JSON.stringify(args[arg][i]));</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					input.val(args[arg][i]);</span><br><span class="line">				&#125;</span><br><span class="line">				form.append(input);</span><br><span class="line">			&#125;</span><br><span class="line">			if (args[arg].length == 1) &#123;</span><br><span class="line">				var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;);</span><br><span class="line">				input.attr(&#123;&quot;name&quot;: arg&#125;);</span><br><span class="line">				input.val(&quot;&quot;);</span><br><span class="line">				form.append(input);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			var input = $(&apos;&lt;input type=&quot;hidden&quot;&gt;&apos;);</span><br><span class="line">			input.attr(&#123;&quot;name&quot;: arg&#125;);</span><br><span class="line">			input.val(args[arg]);</span><br><span class="line">			form.append(input);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$(document.body).append(form);</span><br><span class="line">	form.submit();</span><br><span class="line">	form.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">function standardPost(url, <span class="keyword">args</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">form</span> = $('&lt;<span class="keyword">form</span> method=<span class="string">"post"</span>&gt;&lt;/<span class="keyword">form</span>&gt;');</span><br><span class="line">	<span class="keyword">form</span>.attr(&#123;<span class="string">"action"</span>: url&#125;);</span><br><span class="line">	<span class="keyword">for</span> (arg <span class="keyword">in</span> <span class="keyword">args</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> ($.isPlainObject(<span class="keyword">args</span>[arg])) &#123;</span><br><span class="line">			<span class="keyword">var</span> <span class="keyword">input</span> = $('&lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"hidden"</span>&gt;');</span><br><span class="line">			<span class="keyword">input</span>.attr(&#123;<span class="string">"name"</span>: arg&#125;);</span><br><span class="line">			<span class="keyword">input</span>.val(JSON.stringify(<span class="keyword">args</span>[arg]));</span><br><span class="line">			<span class="keyword">form</span>.<span class="keyword">append</span>(<span class="keyword">input</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span>($.isArray(<span class="keyword">args</span>[arg])) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">var</span> i = 0; i &lt; <span class="keyword">args</span>[arg].length; i++) &#123;</span><br><span class="line">				<span class="keyword">var</span> <span class="keyword">input</span> = $('&lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"hidden"</span>&gt;');</span><br><span class="line">				<span class="keyword">input</span>.attr(&#123;<span class="string">"name"</span>: arg&#125;);</span><br><span class="line">				<span class="keyword">if</span> ($.isPlainObject(<span class="keyword">args</span>[arg][i])) &#123;</span><br><span class="line">					console.<span class="built_in">log</span>(JSON.stringify(<span class="keyword">args</span>[arg][i]));</span><br><span class="line">					<span class="keyword">input</span>.val(JSON.stringify(<span class="keyword">args</span>[arg][i]));</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">input</span>.val(<span class="keyword">args</span>[arg][i]);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">form</span>.<span class="keyword">append</span>(<span class="keyword">input</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">args</span>[arg].length == 1) &#123;</span><br><span class="line">				<span class="keyword">var</span> <span class="keyword">input</span> = $('&lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"hidden"</span>&gt;');</span><br><span class="line">				<span class="keyword">input</span>.attr(&#123;<span class="string">"name"</span>: arg&#125;);</span><br><span class="line">				<span class="keyword">input</span>.val(<span class="string">""</span>);</span><br><span class="line">				<span class="keyword">form</span>.<span class="keyword">append</span>(<span class="keyword">input</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">var</span> <span class="keyword">input</span> = $('&lt;<span class="keyword">input</span> <span class="keyword">type</span>=<span class="string">"hidden"</span>&gt;');</span><br><span class="line">			<span class="keyword">input</span>.attr(&#123;<span class="string">"name"</span>: arg&#125;);</span><br><span class="line">			<span class="keyword">input</span>.val(<span class="keyword">args</span>[arg]);</span><br><span class="line">			<span class="keyword">form</span>.<span class="keyword">append</span>(<span class="keyword">input</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$(document.body).<span class="keyword">append</span>(<span class="keyword">form</span>);</span><br><span class="line">	<span class="keyword">form</span>.submit();</span><br><span class="line">	<span class="keyword">form</span>.remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>使用实例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">exportExcel: function() &#123;</span><br><span class="line">	var tables = getTableData(&quot;.table&quot;);</span><br><span class="line">	var params = &#123;</span><br><span class="line">			excelName: getMessage(&apos;messages.WeeklyReportMoisture&apos;),</span><br><span class="line">			tables: tables,</span><br><span class="line">			rows: [0],</span><br><span class="line">			cols: []</span><br><span class="line">	&#125;</span><br><span class="line">	standardPost(qyb_config.rootPath+&quot;/admin/export_excel.html&quot;,params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">exportExcel: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> tables = getTableData(<span class="string">".table"</span>);</span><br><span class="line">	<span class="keyword">var</span> params = &#123;</span><br><span class="line">			excelName: getMessage(<span class="string">'messages.WeeklyReportMoisture'</span>),</span><br><span class="line">			tables: tables,</span><br><span class="line">			rows: [<span class="number">0</span>],</span><br><span class="line">			cols: []</span><br><span class="line">	&#125;</span><br><span class="line">	standardPost(qyb_config.rootPath+<span class="string">"/admin/export_excel.html"</span>,params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>方法中的rows、cols是用来对导出excel中有第几列或第几行需要合并单元格。</p>
 </blockquote>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/08/29/Java语法归纳/" rel="next" title="Java语法备忘录">
-                <i class="fa fa-chevron-left"></i> Java语法备忘录
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">丁京</p>
-              <p class="site-description motion-element" itemprop="description">description</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">5</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
+        <br />
+        <div id="comment-container">
         </div>
-      </section>
+        <div id="disqus_thread"></div>
 
-      
-
-      
+        <div id="lv-container">
+        </div>
 
     </div>
-  </aside>
+</div>
 
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">丁京</span>
-
-  
+    </div>
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
+<footer class="footer">
+    <ul class="list-inline text-center">
+        
+        
 
         
 
-
-
-
-
-
+        
 
         
-      </div>
-    </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
         
-      </div>
+
+    </ul>
     
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
 
-    
 
-  </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
 
 </body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+        */
+        if( '' || '')
+        var disqus_config = function () {
+            this.page.url = '';  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://airclouds-blog.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+
+
+
 </html>
